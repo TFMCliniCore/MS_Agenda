@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Cita {
+  id             Int      @id @default(autoincrement())
+  fecha          DateTime
+  motivo         String   @db.VarChar(500)
+  tipo           String   @db.VarChar(50)
+  estado         String   @default("NO_COMPLETADO") @db.VarChar(20)
+  eliminado      Boolean  @default(false)
+  pacienteId     Int
+  clienteId      Int
+  usuarioId      Int?
+  recordatorioId Int?     // plain Int — sin FK Prisma para evitar circular ref con Recordatorio
+  recordatorios  Recordatorio[]
+
+  @@map("citas")
+}
+
+model Recordatorio {
+  id         Int      @id @default(autoincrement())
+  motivo     String   @db.VarChar(500)
+  tipo       String   @db.VarChar(50)
+  estado     String   @default("NO_COMPLETADO") @db.VarChar(20)
+  eliminado  Boolean  @default(false)
+  fechaDesde DateTime
+  fechaHasta DateTime
+  pacienteId Int
+  clienteId  Int
+  usuarioId  Int?
+  citaId     Int?
+  cita       Cita?    @relation(fields: [citaId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@map("recordatorios")
+}
+
+model SalaEspera {
+  id         Int      @id @default(autoincrement())
+  hora       DateTime
+  motivo     String   @db.VarChar(500)
+  pago       Boolean  @default(false)
+  llamar     Boolean  @default(false)
+  eliminado  Boolean  @default(false)
+  pacienteId Int
+  clienteId  Int
+  usuarioId  Int?
+
+  @@map("sala_espera")
+}

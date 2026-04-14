@@ -1,0 +1,610 @@
+{
+  "info": {
+    "_postman_id": "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+    "name": "MS Agenda Core",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Coleccion Postman para probar el microservicio MS Agenda Core. Requiere que MS Entidades Core este corriendo en localhost:3001."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3003/api/v1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Citas",
+      "item": [
+        {
+          "name": "Listar citas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/citas",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas"]
+            }
+          }
+        },
+        {
+          "name": "Listar citas - filtro por estado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/citas?estado=NO_COMPLETADO",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas"],
+              "query": [
+                { "key": "estado", "value": "NO_COMPLETADO" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar citas - filtro por rango de fechas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/citas?desde=2026-05-01T00:00:00&hasta=2026-05-31T23:59:59",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas"],
+              "query": [
+                { "key": "desde", "value": "2026-05-01T00:00:00" },
+                { "key": "hasta", "value": "2026-05-31T23:59:59" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar citas - filtro por tipo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/citas?tipo=Consulta",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas"],
+              "query": [
+                { "key": "tipo", "value": "Consulta" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar citas - filtro por paciente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/citas?pacienteId=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas"],
+              "query": [
+                { "key": "pacienteId", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener cita por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/citas/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas", "1"]
+            }
+          }
+        },
+        {
+          "name": "Crear cita",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2026-06-15T10:30:00\",\n  \"motivo\": \"Control post operatorio y revision de herida.\",\n  \"tipo\": \"Consulta\",\n  \"pacienteId\": 1,\n  \"usuarioId\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/citas",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas"]
+            }
+          }
+        },
+        {
+          "name": "Crear cita con recordatorio",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2026-06-20T09:00:00\",\n  \"motivo\": \"Vacunacion anual multiple.\",\n  \"tipo\": \"Vacunacion\",\n  \"pacienteId\": 2,\n  \"usuarioId\": 1,\n  \"recordatorioId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/citas",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar cita (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Control post operatorio, revision de herida y cambio de vendaje.\",\n  \"usuarioId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/citas/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas", "1"]
+            }
+          }
+        },
+        {
+          "name": "Marcar cita como completada",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"COMPLETADO\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/citas/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas", "1"]
+            }
+          }
+        },
+        {
+          "name": "Cancelar cita",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"CANCELADO\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/citas/2",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas", "2"]
+            }
+          }
+        },
+        {
+          "name": "Reemplazar cita (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2026-06-15T11:00:00\",\n  \"motivo\": \"Control post operatorio, revision completa.\",\n  \"tipo\": \"Consulta\",\n  \"estado\": \"NO_COMPLETADO\",\n  \"pacienteId\": 1,\n  \"usuarioId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/citas/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar cita",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/citas/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["citas", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recordatorios",
+      "item": [
+        {
+          "name": "Listar recordatorios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios"]
+            }
+          }
+        },
+        {
+          "name": "Listar recordatorios - filtro por estado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios?estado=NO_COMPLETADO",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios"],
+              "query": [
+                { "key": "estado", "value": "NO_COMPLETADO" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar recordatorios - filtro por rango de fechas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios?desde=2026-05-01T00:00:00&hasta=2026-05-31T23:59:59",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios"],
+              "query": [
+                { "key": "desde", "value": "2026-05-01T00:00:00" },
+                { "key": "hasta", "value": "2026-05-31T23:59:59" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar recordatorios - filtro por tipo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios?tipo=Vacunacion",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios"],
+              "query": [
+                { "key": "tipo", "value": "Vacunacion" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar recordatorios - filtro por paciente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios?pacienteId=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios"],
+              "query": [
+                { "key": "pacienteId", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener recordatorio por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Crear recordatorio",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Recordar al cliente sobre la proxima vacunacion antirabica.\",\n  \"tipo\": \"Vacunacion\",\n  \"fechaDesde\": \"2026-06-13T08:00:00\",\n  \"fechaHasta\": \"2026-06-15T08:00:00\",\n  \"pacienteId\": 2,\n  \"usuarioId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios"]
+            }
+          }
+        },
+        {
+          "name": "Crear recordatorio vinculado a cita",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Aviso previo a la cita de control post operatorio.\",\n  \"tipo\": \"Consulta\",\n  \"fechaDesde\": \"2026-06-13T08:00:00\",\n  \"fechaHasta\": \"2026-06-15T08:00:00\",\n  \"pacienteId\": 1,\n  \"usuarioId\": 2,\n  \"citaId\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar recordatorio (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Recordatorio actualizado: vacunacion antirabica y desparasitacion.\",\n  \"fechaHasta\": \"2026-06-16T08:00:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Marcar recordatorio como completado",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"COMPLETADO\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Reemplazar recordatorio (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Recordatorio completo reemplazado por PUT.\",\n  \"tipo\": \"Seguimiento\",\n  \"estado\": \"NO_COMPLETADO\",\n  \"fechaDesde\": \"2026-06-14T08:00:00\",\n  \"fechaHasta\": \"2026-06-16T08:00:00\",\n  \"pacienteId\": 2,\n  \"usuarioId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar recordatorio",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/recordatorios/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["recordatorios", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sala de Espera",
+      "item": [
+        {
+          "name": "Listar sala de espera",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera"]
+            }
+          }
+        },
+        {
+          "name": "Listar sala de espera - pendientes de llamar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera?llamar=false",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera"],
+              "query": [
+                { "key": "llamar", "value": "false" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar sala de espera - sin pago",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera?pago=false",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera"],
+              "query": [
+                { "key": "pago", "value": "false" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar sala de espera - filtro por rango de horas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera?desde=2026-05-10T08:00:00&hasta=2026-05-10T18:00:00",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera"],
+              "query": [
+                { "key": "desde", "value": "2026-05-10T08:00:00" },
+                { "key": "hasta", "value": "2026-05-10T18:00:00" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar sala de espera - filtro por paciente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera?pacienteId=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera"],
+              "query": [
+                { "key": "pacienteId", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener entrada de sala de espera por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera", "1"]
+            }
+          }
+        },
+        {
+          "name": "Agregar paciente a sala de espera",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hora\": \"2026-06-15T10:15:00\",\n  \"motivo\": \"Llego para consulta de control post operatorio.\",\n  \"pago\": false,\n  \"llamar\": false,\n  \"pacienteId\": 1,\n  \"usuarioId\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera"]
+            }
+          }
+        },
+        {
+          "name": "Marcar pago realizado",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pago\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera", "1"]
+            }
+          }
+        },
+        {
+          "name": "Marcar paciente llamado al consultorio",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"llamar\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera", "1"]
+            }
+          }
+        },
+        {
+          "name": "Marcar pago y llamado simultaneamente",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pago\": true,\n  \"llamar\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera", "1"]
+            }
+          }
+        },
+        {
+          "name": "Reemplazar entrada de sala de espera (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hora\": \"2026-06-15T10:30:00\",\n  \"motivo\": \"Llego tarde para consulta de control, reingreso.\",\n  \"pago\": true,\n  \"llamar\": false,\n  \"pacienteId\": 1,\n  \"usuarioId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar entrada de sala de espera",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sala-espera/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["sala-espera", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
