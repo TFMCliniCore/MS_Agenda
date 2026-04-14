@@ -1,0 +1,3 @@
+export const ESTADO_NO_COMPLETADO = 'NO_COMPLETADO';
+export const ESTADO_COMPLETADO    = 'COMPLETADO';
+export const ESTADO_CANCELADO     = 'CANCELADO';
