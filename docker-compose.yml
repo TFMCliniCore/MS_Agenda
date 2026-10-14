@@ -17,7 +17,7 @@ services:
     volumes:
       - postgres_agenda_data:/var/lib/postgresql/data # Nombre de volumen único
     networks:
-      - ms-agenda-net
+      - clinicore-net
 
   api:
     build:
@@ -37,11 +37,11 @@ services:
     ports:
       - "${PORT}:${PORT}"
     networks:
-      - ms-agenda-net
+      - clinicore-net
 
 volumes:
   postgres_agenda_data: # Nombre de volumen único para evitar colisiones locales
 
 networks:
-  ms-agenda-net:
-    driver: bridge
+  clinicore-net:
+    external: true

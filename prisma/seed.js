@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-const MS_ENTIDADES_URL = process.env.MS_ENTIDADES_URL ?? 'http://localhost:3001/api/v1';
+const MS_ENTIDADES_URL = process.env.MS_ENTIDADES_CORE_URL ?? process.env.MS_ENTIDADES_URL ?? 'http://ms-entidades:3001/api/v1';
 
 async function fetchPacientes() {
   const res = await fetch(`${MS_ENTIDADES_URL}/pacientes`);
