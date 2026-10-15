@@ -20,7 +20,7 @@ export class EntidadesClientService {
   private readonly baseUrl: string;
 
   constructor() {
-    this.baseUrl = process.env.MS_ENTIDADES_URL ?? 'http://localhost:3001/api/v1';
+    this.baseUrl = process.env.MS_ENTIDADES_URL ?? 'http://ms-entidades:3001/api/v1';
   }
 
   // ── Validaciones individuales (para POST/PUT) ─────────────────────────────
